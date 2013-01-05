@@ -1,0 +1,14 @@
+configureBuild()
+
+def configureBuild() {
+    logger.info 'Configuring build'
+
+    logger.info 'Gradle Version = ' + gradle.gradleVersion
+    logger.info 'Java Version = ' + System.properties['java.vendor'] + ' ' + System.properties['java.version']
+    //logger.info 'Project Version = ' + project_version
+
+    configure(allprojects) {
+        apply from: System.properties['user.home'] + '/gradle-templates/jvm-development-tasks.gradle'
+    }
+}
+
