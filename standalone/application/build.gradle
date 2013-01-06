@@ -2,3 +2,5 @@ configure(allprojects) {
     apply from: System.properties['user.home'] + '/gradle-templates/jvm-development-stage-one.gradle'
 }
 
+apply plugin:'application'
+mainClassName = "org.kurron.standalone.cli.Main"
