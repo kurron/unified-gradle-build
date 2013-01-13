@@ -2,5 +2,14 @@ configure(allprojects) {
     apply from: System.properties['user.home'] + '/gradle-templates/jvm-development-stage-one.gradle'
 }
 
+ext {
+    sharedVersion = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile "kurron:standalone-shared:${sharedVersion}"
+    sourceArchives "kurron:standalone-shared:${sharedVersion}:sources"
+}
+
 apply plugin:'application'
 mainClassName = "org.kurron.standalone.cli.Main"

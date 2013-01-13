@@ -1,0 +1,61 @@
+allprojects {
+    // global properties
+    ext {
+        gradleVersion = '1.4'
+    }
+
+    // standard artifact repositories
+    repositories {
+        mavenCentral()
+        maven {
+            name 'SpringSource Released'
+            url "http://repo.springsource.org/libs-release"
+        }
+        maven {
+            name 'SpringSource Milestone'
+            url "http://repo.springsource.org/libs-milestone"
+        }
+        maven {
+            name 'SpringSource Snapshot'
+            url "http://repo.springsource.org/libs-snapshot"
+        }
+    }
+
+    group = "kurron"
+    version = 'default'
+    description = 'default'
+
+    task showRepositories()  {
+        description = 'Display each artifact repository and its URL'
+        group = 'Infrastructure'
+
+        doLast {
+            repositories.each {
+                println "$it.name = $it.url"
+            }
+
+        }
+    }
+
+    task wrapper(type: Wrapper) {
+        description = 'Make Gradle installation optional'
+        group = 'Infrastructure'
+        gradleVersion = "${gradleVersion}"
+    }
+
+    apply plugin: 'project-report'
+
+    afterProject { project ->
+        println 'after ' + project.name
+        if ( project.plugins.hasPlugin( JavaPlugin ) )
+        {
+            println 'Java plugin detected!'
+            logger.quiet 'Applying jdepend plug-in'
+            project.plugins.apply( 'jdepend' )
+            project.jdependMain.enabled = true
+            project.jdependTest.enabled = true
+            project.properties['jdepend'].ignoreFailures = false
+            project.properties['jdepend'].sourceSets = [sourceSets.main,sourceSets.test]
+        }
+    }
+}
