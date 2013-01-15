@@ -1,4 +1,10 @@
-configure(allprojects) {
-    apply from: System.properties['user.home'] + '/gradle-templates/jvm-development-stage-one.gradle'
+println 'project = ' + project.name
+
+description = 'stand alone library'
+version = '1.2.3'
+
+repositories {
+    mavenLocal()
 }
 
+apply plugin: 'java'

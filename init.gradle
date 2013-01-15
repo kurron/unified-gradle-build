@@ -50,6 +50,11 @@ allprojects {
         if ( project.plugins.hasPlugin( JavaPlugin ) )
         {
             println 'Java plugin detected!'
+
+            logger.quiet 'Configuring compiler options'
+            project.tasks.getByName( 'compileJava' ).options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+            project.tasks.getByName( 'compileTestJava' ).options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+
             logger.quiet 'Applying jdepend plug-in'
             project.plugins.apply( 'jdepend' )
             project.jdependMain.enabled = true
